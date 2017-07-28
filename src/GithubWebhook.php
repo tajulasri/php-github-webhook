@@ -56,20 +56,21 @@ class GithubWebhook implements WebhookInterface
     {
 
         $parser = $this->parseSignatureHash();
+        $rawRequest = $this->request->getContent();
+
         //run hash services comparison
-        $signature = HashService::make('testing')
+        $signature = HashService::make($rawRequest)
             ->setHash($parser['hash_type'])
             ->encrypt($this->credentials['secret_key'])
             ->compare($parser['signature']);
 
         if (!$signature) {
-
             throw new WebhookHandlerException('Signature not match.');
         }
 
-        $this->response = $this->request->all();
+        $this->response = $rawRequest;
 
-        return true;
+        return $this;
     }
 
     /**
@@ -116,5 +117,4 @@ class GithubWebhook implements WebhookInterface
 
         return null;
     }
-
 }
