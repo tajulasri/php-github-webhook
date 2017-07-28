@@ -8,6 +8,8 @@ class HashService
 
     private $hash;
 
+    private $signature;
+
     public function __construct($payload)
     {
         $this->payload = $payload;
@@ -24,8 +26,14 @@ class HashService
         return $this;
     }
 
-    public function check($compare)
+    public function encrypt($key)
     {
-        return hash_hmac($this->hash, $this->payload, $compare) ? true : false;
+        $this->signature = hash_hmac($this->hash, $this->payload, $key);
+        return $this;
+    }
+
+    public function compare($data)
+    {
+        return $this->signature === $data ?: false;
     }
 }

@@ -47,10 +47,14 @@ class GithubWebhook
     {
         //check headers present.
         //run hash services comparison
-        $hashCheck = HashService::make('dc724af18fbdd4e59189f5fe768a5f8311527050')
+        $signature = HashService::make('testing')
             ->setHash('sha1')
-            ->check($this->credentials['secret_token']);
+            ->encrypt('testing', $this->credentials['secret_token'])
+            ->compare('40cf35581833746c71a4c3c53886fe2a2e207577');
 
-        dd($hashCheck);
+        if (!$signature) {
+
+            //do something here
+        }
     }
 }
