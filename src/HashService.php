@@ -64,6 +64,6 @@ class HashService
      */
     public function compare($data)
     {
-        return $this->signature === $data ?: false;
+        return $this->signature === $data ? true : false;
     }
 }

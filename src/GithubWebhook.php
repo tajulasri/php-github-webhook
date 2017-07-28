@@ -36,6 +36,7 @@ class GithubWebhook
             throw new WebhookHandlerException('Secret token key must be present in credentials ');
         }
 
+        $this->credentials = $credentials;
         return $this;
     }
 
@@ -49,8 +50,11 @@ class GithubWebhook
         //run hash services comparison
         $signature = HashService::make('testing')
             ->setHash('sha1')
-            ->encrypt('testing', $this->credentials['secret_token'])
+            ->encrypt($this->credentials['secret_key'])
             ->compare('40cf35581833746c71a4c3c53886fe2a2e207577');
+        //40cf35581833746c71a4c3c53886fe2a2e207577
+
+        return dd($signature);
 
         if (!$signature) {
 
