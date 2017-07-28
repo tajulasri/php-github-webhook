@@ -49,9 +49,9 @@ class GithubWebhook
         //check headers present.
         //run hash services comparison
         $signature = HashService::make('testing')
-            ->setHash('sha1')
+            ->setHash($this->getHashType())
             ->encrypt($this->credentials['secret_key'])
-            ->compare('40cf35581833746c71a4c3c53886fe2a2e207577');
+            ->compare('40cf35581833746c71a4c3c53886fe2a2e207577'); //github header payload
         //40cf35581833746c71a4c3c53886fe2a2e207577
 
         return dd($signature);
@@ -60,5 +60,12 @@ class GithubWebhook
 
             //do something here
         }
+    }
+
+    private function getHashType()
+    {
+        list($algo, $hash) = explode('=', 'sha1=59baee686dc288a3e7b4fe5a501663f2de47117d', 2);
+        //replace this with github header.
+        return $algo;
     }
 }
