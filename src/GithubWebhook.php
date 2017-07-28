@@ -3,7 +3,6 @@
 namespace WebhookHandler;
 
 use Illuminate\Http\Request;
-use WebhookHandler\Exceptions\WebhookHandlerException;
 use WebhookHandler\ValidatorService;
 
 class GithubWebhook
@@ -35,7 +34,6 @@ class GithubWebhook
         if (!ValidatorService::make($credentials)->validate()->passed()) {
 
             throw new WebhookHandlerException('Secret token key must be present in credentials ');
-            return;
         }
 
         return $this;
@@ -47,6 +45,12 @@ class GithubWebhook
      */
     public function start()
     {
-        return dd($this->request->all());
+        //check headers present.
+        //run hash services comparison
+        $hashCheck = HashService::make('dc724af18fbdd4e59189f5fe768a5f8311527050')
+            ->setHash('sha1')
+            ->check($this->credentials['secret_token']);
+
+        dd($hashCheck);
     }
 }
