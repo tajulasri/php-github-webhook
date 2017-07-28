@@ -9,4 +9,4 @@ use WebhookHandler\GithubWebhook;
  * expected usages
  */
 
-$webhook = (new GithubWebhook(new Request))->setCredentials(['secret_key' => 'testing'])->start();
+$webhook = (new GithubWebhook(new Request))->setCredentials(['secret_key' => 'testing'])->handle();

@@ -17,6 +17,9 @@
 
         "psr-4": {
             "WebhookHandler\\":"src/"
-        }
+        },
+        "files": [
+            "src/Events/events.php"
+        ]
     }
 }

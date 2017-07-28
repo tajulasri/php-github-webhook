@@ -3,6 +3,7 @@
 namespace WebhookHandler;
 
 use Illuminate\Http\Request;
+use WebhookHandler\Exceptions\WebhookHandlerException;
 use WebhookHandler\ValidatorService;
 
 class GithubWebhook
@@ -19,6 +20,12 @@ class GithubWebhook
      * @var [type]
      */
     private $credentials;
+
+    /**
+     * response object
+     * @var [type]
+     */
+    private $response;
 
     public function __construct(Request $request)
     {
@@ -44,28 +51,53 @@ class GithubWebhook
      * all logic should be inside here
      * @return [type] [description]
      */
-    public function start()
+    public function handle()
     {
-        //check headers present.
+
+        $parser = $this->parseSignatureHash();
         //run hash services comparison
         $signature = HashService::make('testing')
-            ->setHash($this->getHashType())
+            ->setHash($parser['hash_type'])
             ->encrypt($this->credentials['secret_key'])
-            ->compare('40cf35581833746c71a4c3c53886fe2a2e207577'); //github header payload
-        //40cf35581833746c71a4c3c53886fe2a2e207577
-
-        return dd($signature);
+            ->compare($parser['signature']);
 
         if (!$signature) {
 
-            //do something here
+            throw new WebhookHandlerException('Signature not match.');
         }
+
+        $this->response = $this->request->all();
     }
 
-    private function getHashType()
+    /**
+     * get response return
+     * @return [type] [description]
+     */
+    public function getResponse()
     {
-        list($algo, $hash) = explode('=', 'sha1=59baee686dc288a3e7b4fe5a501663f2de47117d', 2);
-        //replace this with github header.
-        return $algo;
+        return $this->response;
     }
+
+    /**
+     * extract signature and hash from header
+     * @return [type] [description]
+     */
+    private function parseSignatureHash()
+    {
+        $data = [
+
+            'hash_type' => null,
+            'signature' => null,
+        ];
+
+        if ($this->request->hasHeader('HTTP_X_HUB_SIGNATURE')) {
+
+            list($algo, $signature) = explode('=', $this->request->header('HTTP_X_HUB_SIGNATURE'), 2);
+            $data['hash_type'] = $algo;
+            $data['signature'] = $signature;
+        }
+
+        return $data;
+    }
+
 }
