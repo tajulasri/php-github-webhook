@@ -5,8 +5,9 @@ namespace WebhookHandler;
 use Illuminate\Http\Request;
 use WebhookHandler\Exceptions\WebhookHandlerException;
 use WebhookHandler\ValidatorService;
+use WebhookHandler\WebhookInterface;
 
-class GithubWebhook
+class GithubWebhook implements WebhookInterface
 {
 
     /**
@@ -100,6 +101,20 @@ class GithubWebhook
         }
 
         return $data;
+    }
+
+    /**
+     * extract event from header
+     * @return [type] [description]
+     */
+    private function parseEvent()
+    {
+        if ($this->request->hasHeader('HTTP_X_GITHUB_EVENT')) {
+
+            return $this->request->header('HTTP_X_GITHUB_EVENT');
+        }
+
+        return null;
     }
 
 }
