@@ -67,6 +67,8 @@ class GithubWebhook
         }
 
         $this->response = $this->request->all();
+
+        return true;
     }
 
     /**
