@@ -1,0 +1,22 @@
+{
+    "name": "tajul/php-github-webhook",
+    "description": "Php package for github webhook.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tajul",
+            "email": "mtajulasri@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "illuminate/http": "5.4.*"
+    },
+    "autoload": {
+
+        "psr-4": {
+            "WebhookHandler\\":"src/"
+        }
+    }
+}
