@@ -9,7 +9,7 @@ sample of usages
 ```php	
 use Illuminate\Http\Request;
 
-$webhook = (new \WebhookHanlder\GithubWebhook(new Request))->setCredentials(['secret_key' => ''])->start();
+$webhook = (new \WebhookHanlder\GithubWebhook(new Request))->setCredentials(['secret_key' => ''])->handle();
 ```
 
 too see what happen?Workaround with http request. This is how to mock the flow test
@@ -30,7 +30,7 @@ php -r "echo hash_hmac('sha1','testing','testing');"
 ```php  
 use Illuminate\Http\Request;
 
-$webhook = (new \WebhookHanlder\GithubWebhook(new Request))->setCredentials(['secret_key' => 'testing'])->start();
+$webhook = (new \WebhookHanlder\GithubWebhook(new Request))->setCredentials(['secret_key' => 'testing'])->handle();
 ```
 
 ## request via curl by sending fake header and payload
