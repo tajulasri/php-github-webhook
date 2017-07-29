@@ -27,7 +27,7 @@ php -S localhost:8080
 
 ## generate mock secret key and payload
 ```php
-php -r "echo hash_hmac('sha1','{\"data": "sample_response\"}','testing');"
+php -r "echo hash_hmac('sha1','{"data": "sample_response"}','testing');"
 ```
 
 ## set credentials to testing
