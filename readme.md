@@ -1,11 +1,9 @@
 ## Github webhook php
 
-
 ```php
 composer install
 ```
-
-sample of usages
+Sample of usages
 ```php	
 use Illuminate\Http\Request;
 
@@ -16,21 +14,18 @@ $webhook = (new \WebhookHanlder\GithubWebhook(new Request))
 
 ```
 
-too see what happen?Workaround with http request. This is how to mock the flow test
+What is happen behind request during webhook? Lets simulate using fake payload transport via curl on localhost:8080.
 
-- run server
 ```php
-
 php -S localhost:8080 
-
 ```
 
-## generate mock secret key and payload
+## Generate mock secret key and payload
 ```php
 php -r "echo hash_hmac('sha1','{"data": "sample_response"}','testing');"
 ```
 
-## set credentials to testing
+## set credentials by using __testing__ in this case.
 ```php  
 use Illuminate\Http\Request;
 
@@ -43,7 +38,9 @@ $webhook = (new \WebhookHanlder\GithubWebhook(new Request))
 ## Request via curl by sending fake header and payload.
 
 ```php
- curl -X POST localhost:8080 -H 'HTTP_X_HUB_SIGNATURE: sha1=40cf35581833746c71a4c3c53886fe2a2e207577' -H 'Content-type: application/json' -d '{"data": "sample_response"}'
+ curl -X POST localhost:8080 \ 
+ -H 'HTTP_X_HUB_SIGNATURE: sha1=40cf35581833746c71a4c3c53886fe2a2e207577' \
+ -H 'Content-type: application/json' -d '{"data": "sample_response"}'
 ```
 
 ```javascript
