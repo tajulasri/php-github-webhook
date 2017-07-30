@@ -35,6 +35,15 @@ $webhook = (new \WebhookHanlder\GithubWebhook(new Request))
   ->getResponse();
 ```
 
+## Get signature validation 
+```php
+
+$webhook = (new GithubWebhook(new Request))
+    ->setCredentials(['secret_key' => 'testing'])
+    ->handle()
+    ->passes();
+
+```
 ## Request via curl by sending fake header and payload.
 
 ```php

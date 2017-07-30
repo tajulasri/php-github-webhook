@@ -14,4 +14,4 @@ use WebhookHandler\GithubWebhook;
 $webhook = (new GithubWebhook(new Request))
     ->setCredentials(['secret_key' => 'testing'])
     ->handle()
-    ->getResponse();
+    ->passes();

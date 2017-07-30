@@ -28,6 +28,12 @@ class GithubWebhook implements WebhookInterface
      */
     private $response;
 
+    /**
+     * signature status
+     * @var [type]
+     */
+    private $signature;
+
     public function __construct(Request $request)
     {
         $this->request = $request->createFromGlobals();
@@ -64,13 +70,19 @@ class GithubWebhook implements WebhookInterface
             ->encrypt($this->credentials['secret_key'])
             ->compare($parser['signature']);
 
-        if (!$signature) {
-            throw new WebhookHandlerException('Signature not match.');
-        }
-
         $this->response = $rawRequest;
+        $this->signature = $signature;
 
         return $this;
+    }
+
+    /**
+     * return signature validation
+     * @return [type] [description]
+     */
+    public function passes()
+    {
+        return $this->signature;
     }
 
     /**
