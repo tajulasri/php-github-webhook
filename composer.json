@@ -9,17 +9,15 @@
             "email": "mtajulasri@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "0.1",
     "require": {
-        "illuminate/http": "5.4.*"
+        "illuminate/http": "5.4.*",
+        "tajul/php-github-webhook": "dev-master"
     },
     "autoload": {
 
         "psr-4": {
             "WebhookHandler\\":"src/"
-        },
-        "files": [
-            "src/Events/events.php"
-        ]
+        }
     }
 }
