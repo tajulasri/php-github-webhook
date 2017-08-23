@@ -9,7 +9,7 @@
             "email": "mtajulasri@gmail.com"
         }
     ],
-    "minimum-stability": "0.1",
+    "minimum-stability": "dev",
     "require": {
         "illuminate/http": "5.4.*",
         "tajul/php-github-webhook": "dev-master"

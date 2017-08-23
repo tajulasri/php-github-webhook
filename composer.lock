@@ -473,12 +473,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "15b0a06a42dc611cebc03f8dc4bff180d95421c7"
+                "reference": "56cb55542f299c1e540c0e6f4ecd7e88553c93e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/15b0a06a42dc611cebc03f8dc4bff180d95421c7",
-                "reference": "15b0a06a42dc611cebc03f8dc4bff180d95421c7",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/56cb55542f299c1e540c0e6f4ecd7e88553c93e5",
+                "reference": "56cb55542f299c1e540c0e6f4ecd7e88553c93e5",
                 "shasum": ""
             },
             "require": {
@@ -521,7 +521,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-07-06T13:37:40+00:00"
+            "time": "2017-07-28 15:35:42"
         },
         {
             "name": "symfony/event-dispatcher",
