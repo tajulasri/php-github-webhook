@@ -61,7 +61,7 @@ class GithubWebhook implements WebhookInterface
     public function handle()
     {
 
-        $parser     = $this->parseSignatureHash();
+        $parser = $this->parseSignatureHash();
         $rawRequest = $this->request->getContent();
 
         //run hash services comparison
@@ -70,7 +70,7 @@ class GithubWebhook implements WebhookInterface
             ->encrypt($this->credentials['secret_key'])
             ->compare($parser['signature']);
 
-        $this->response  = $rawRequest;
+        $this->response = $rawRequest;
         $this->signature = $signature;
 
         return $this;
@@ -106,11 +106,11 @@ class GithubWebhook implements WebhookInterface
             'signature' => null,
         ];
 
-        if ($this->request->hasHeader('X-Hub-Signature')) {
+        if ($this->request->hasHeader('HTTP_X_HUB_SIGNATURE')) {
 
-            list($algo, $signature) = explode('=', $this->request->header('X-Hub-Signature'), 2);
-            $data['hash_type']      = $algo;
-            $data['signature']      = $signature;
+            list($algo, $signature) = explode('=', $this->request->header('HTTP_X_HUB_SIGNATURE'), 2);
+            $data['hash_type'] = $algo;
+            $data['signature'] = $signature;
         }
 
         return $data;
@@ -122,9 +122,9 @@ class GithubWebhook implements WebhookInterface
      */
     private function parseEvent()
     {
-        if ($this->request->hasHeader('X-GitHub-Event')) {
+        if ($this->request->hasHeader('HTTP_X_GITHUB_EVENT')) {
 
-            return $this->request->header('X-GitHub-Event');
+            return $this->request->header('HTTP_X_GITHUB_EVENT');
         }
 
         return null;
