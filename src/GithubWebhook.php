@@ -34,6 +34,17 @@ class GithubWebhook implements WebhookInterface
      */
     private $signature;
 
+    /**
+     * headers tag
+     * @var [type]
+     */
+    private $headers = [
+
+        'signature'   => 'X-Hub-Signature',
+        'event'       => 'X-GitHub-Event',
+        'delivery_id' => 'X-GitHub-Delivery',
+    ];
+
     public function __construct(Request $request)
     {
         $this->request = $request->createFromGlobals();
@@ -106,12 +117,14 @@ class GithubWebhook implements WebhookInterface
             'signature' => null,
         ];
 
-        if ($this->request->hasHeader('HTTP_X_HUB_SIGNATURE')) {
+        if (!$this->request->hasHeader($this->headers['signature'])) {
 
-            list($algo, $signature) = explode('=', $this->request->header('HTTP_X_HUB_SIGNATURE'), 2);
-            $data['hash_type'] = $algo;
-            $data['signature'] = $signature;
+            throw new WebhookHandlerException('There is not signature in header present');
         }
+
+        list($algo, $signature) = explode('=', $this->request->header($this->headers['signature']), 2);
+        $data['hash_type'] = $algo;
+        $data['signature'] = $signature;
 
         return $data;
     }
@@ -122,11 +135,11 @@ class GithubWebhook implements WebhookInterface
      */
     private function parseEvent()
     {
-        if ($this->request->hasHeader('HTTP_X_GITHUB_EVENT')) {
+        if (!$this->request->hasHeader($this->headers['event'])) {
 
-            return $this->request->header('HTTP_X_GITHUB_EVENT');
+            throw new WebhookHandlerException('There is not signature in header present');
         }
 
-        return null;
+        return $this->request->header($this->headers['event']);
     }
 }
