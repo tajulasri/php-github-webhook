@@ -142,4 +142,5 @@ class GithubWebhook implements WebhookInterface
 
         return $this->request->header($this->headers['event']);
     }
+
 }
