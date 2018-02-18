@@ -62,7 +62,7 @@ class HashService
      * @param  [type] $data [description]
      * @return [type]       [description]
      */
-    public function compare($data)
+    public function compare($data): boolean
     {
         return $this->signature === $data ? true : false;
     }

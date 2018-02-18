@@ -33,7 +33,7 @@ abstract class Event
      * check present of event
      * @return boolean does ping supply
      */
-    public function present()
+    public function present(): boolean
     {
         return in_array(static::$key, $this->header) ?: false;
     }
@@ -42,7 +42,7 @@ abstract class Event
      * does event is ping
      * @return boolean [description]
      */
-    public function is()
+    public function is(): boolean
     {
         return $this->header[static::$key] = $this->eventKey() ?: false;
     }
